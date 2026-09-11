@@ -1,11 +1,10 @@
 # User Story Template
 
 **Title:**
-_As a [user role], I want [feature/goal], so that [reason]._
-As a Admin, I want Log into the portal with username and password to manage the platform securely
-As a Admin, I want Log out of the portal to protect system access
-As a Admin, I want to Add doctors to the portal
-As a Admin, I want to Delete doctor's profile from the portal
+As a Admin, I want Log into the portal with username and password to manage the platform securely 
+As a Admin, I want Log out of the portal to protect system access 
+As a Admin, I want to Add doctors to the portal 
+As a Admin, I want to Delete doctor's profile from the portal 
 As a Admin, I want to Run a stored procedure in MySQL CLI to get the number of appointments per month and track usage statistics
 
     As a patient I want to View a list of doctors without logging in to explore options before registering
