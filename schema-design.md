@@ -2,7 +2,11 @@
 
 ### Table: patients
 - id: INT, Primary Key, Auto Increment
-- name: VARCHAR(30)
+- name: VARCHAR(3 - 100)
+- email: VARCHAR(30), not mull
+- password: VARCHAR(30), not null
+- phone: VARCHAR(30)
+- address: VARCHAR(100)
 
 ### Table: doctors 
 - id: INT, Primary Key, Auto Increment
