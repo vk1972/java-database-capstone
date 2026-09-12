@@ -6,7 +6,15 @@
 
 ### Table: doctors 
 - id: INT, Primary Key, Auto Increment
-- name: VARCHAR(30)
+- name: VARCHAR(3 - 100)
+- speciality: VARCHAR(3 - 50)
+- email: VARCHAR(30), not mull
+- password: VARCHAR(30), not null
+- phone: VARCHAR(30)
+
+### Table: availableTimes
+- doctor_id: INT, Foreign Key → doctors(id)
+- availableTime
 
 ### Table: admin
 - id: INT, Primary Key, Auto Increment
