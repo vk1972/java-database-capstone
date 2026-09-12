@@ -10,7 +10,8 @@
 
 ### Table: admin
 - id: INT, Primary Key, Auto Increment
-- name: VARCHAR(30)
+- username: VARCHAR(100)
+- password: VARCHAR(30)
 
 ### Table: clinic_locations
 - id: INT, Primary Key, Auto Increment
