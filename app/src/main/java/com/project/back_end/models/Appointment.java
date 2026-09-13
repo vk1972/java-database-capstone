@@ -1,6 +1,15 @@
 package com.project.back_end.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalTime;
 import java.time.LocalDateTime;
+import jakarta.validation.constraints.Future;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Appointment {
@@ -75,7 +84,7 @@ public LocalDateTime getEndTime() {
 //      - It returns a LocalDate object representing just the date (without the time) of the scheduled appointment.
 @Transient
 public LocalDateTime getAppointmentDate() {
-    return appointmentTime.toLocalDate();
+    return appointmentTime;
 }
 
 // 8. 'getAppointmentTimeOnly' method:
@@ -84,7 +93,7 @@ public LocalDateTime getAppointmentDate() {
 //      - This method extracts only the time part from the appointmentTime field.
 //      - It returns a LocalTime object representing just the time (without the date) of the scheduled appointment.
 @Transient
-public LocalDateTime getAppointmentTimeOnly() {
+public LocalTime getAppointmentTimeOnly() {
     return appointmentTime.toLocalTime();
 }
 
@@ -96,7 +105,7 @@ public LocalDateTime getAppointmentTimeOnly() {
 //    - Standard getter and setter methods are provided for accessing and modifying the fields: id, doctor, patient, appointmentTime, status, etc.
 
 
-public int getId(){
+public Long getId(){
     return id;
 }
 
@@ -113,7 +122,7 @@ public int getStatus(){
 }
 
 
-public void setId(int id){
+public void setId(Long id){
     this.id = id;
 }
 

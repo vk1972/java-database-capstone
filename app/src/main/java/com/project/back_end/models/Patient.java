@@ -1,6 +1,19 @@
 package com.project.back_end.models;
 
-@Entity@Entity
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
+
+@Entity
 public class Patient {
 // @Entity annotation:
 //    - Marks the class as a JPA entity, meaning it represents a table in the database.
@@ -71,7 +84,7 @@ private String address;
 //    - Standard getter and setter methods are provided for all fields: id, name, email, password, phone, and address.
 //    - These methods allow access and modification of the fields of the Patient class.
 
- public int getId(){
+ public Long getId(){
     return id;
 }
 
@@ -95,7 +108,7 @@ public String getAddress(){
     return address;
 } 
 
-public void setId(int id){
+public void setId(Long id){
     this.id = id;
 }
 

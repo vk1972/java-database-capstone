@@ -1,5 +1,14 @@
 package com.project.back_end.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
+
 @Entity
 public class Admin {
 
@@ -45,7 +54,7 @@ private String password;
 // 5. Getters and Setters:
 //    - Standard getter and setter methods are provided for accessing and modifying the fields.
 
-public int getId(){
+public Long getId(){
     return id;
 }
 
@@ -57,15 +66,15 @@ public String getPassword(){
     return password;
 }
 
-public void getId(int id ){
+public void setId(Long id ){
     this.id = id;
 }
 
-public void getUsername(String username){
+public void setUsername(String username){
     this.username = username;
 }
 
-public String getPassword(String password){
+public void setPassword(String password){
     this.password = password;
 }
 }
