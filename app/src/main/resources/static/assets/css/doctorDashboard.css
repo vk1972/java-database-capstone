@@ -3,8 +3,31 @@
 */
 * { margin: 0; padding: 0; box-sizing: border-box; };
 
-html, body{
-    size: 100%;
+.wrapper, html, body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-content{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 /*
