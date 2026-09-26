@@ -1,13 +1,20 @@
 /* this is the style sheet file for index.htlm  */
 
-/* 
+/*
 **Global Reset (`*`)**
 
 * Remove all default margin and padding.
 * Use `border-box` for sizing to include padding and border in element size.
-
+*/
+* { margin: 0; padding: 0; box-sizing: border-box; }
+/*
 **Base (`html, body`)**
-
+*/
+.wrapper, html, body {
+    height: 100%;
+    margin: 0;
+}
+/*
 * Set height to 100% for full viewport layout.
 * Use the `'Roboto'` sans-serif font for modern, clean typography.
 
@@ -15,13 +22,39 @@
 
 * Use a vertical flexbox layout.
 * Ensure the wrapper covers at least the full height of the screen (`min-height: 100vh`).
-
+*/
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+/*
 **Heading (`h2`)**
 
 * Set a large font size (`48px`) for prominence.
 * Add a bottom margin of `50px` for spacing.
 * Use a dark teal color (`#003e3e`).
 * Make the font bold and use a blended font stack (`'Alegreya', 'Roboto', sans-serif`) for elegant styling.
+*/
+  .container h2 {
+    text-align: center;
+    color: #003e3e;
+    font-size: 48px;
+    font-weight: bold;
+    font-family:'Alegreya', 'Roboto', sans-serif;
+    margin-bottom: 50px;
+  }
+
+  .container h2 span {
+    color: #A62B1F;
+  }
+
+/*
 
 **Main Section (`.main-content`)**
 
@@ -36,7 +69,38 @@
   * `center` positioning
   * no repeat
   * `fixed` attachment to keep image still during scroll
+*/
+.main-content{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 40px;
+    justify-content: center;
+    align-items: center;
+    
+  /* Replace with your image path or URL */
+  //background-image: url('your-image.jpg');
+  
+  /* Scale the image to cover the entire screen */
+  background-size: cover;
+  
+  /* Center the image on the page */
+  background-position: center;
+  
+  /* Prevent the image from repeating like a grid */
+  background-repeat: no-repeat;
+  
+  /* Keep the background fixed in place during scrolling (optional) */
+  background-attachment: fixed;
+  
+  /* Fill the full height of the browser window */
+  height: 100vh;
+  
+  /* Remove default browser margins */
+  margin: 0;
+}
 
+/*
 **Buttons (`button`)**
 
 * Style with a teal green background (`#015c5d`) and white text.
@@ -45,9 +109,37 @@
 * Add a top margin of `10px` for spacing.
 * Enable pointer cursor and readable font size (`16px`).
 * On hover, change background color to bold red (`#A62B1F`).
+*/
+.button, btn-role {
+    background-color: #015c5d;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    padding: 15px 20px;
+    width: 200px;
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .button, btn-role :hover {
+    background-color: #A62B1F;
+  }
 
+/*
 **Dashboard Buttons (`.dashboard-btn`)**
 
 * Use the same base green background (`#015c5d`) as the default button.
 * On hover, darken the background to deep teal (`#003e3e`) for visual feedback.
  */
+ .dashboard-btn{
+    background-color: #015c5d; 
+ }
+
+ .dashboard-btn :hover {
+    background-color: #003e3e;
+  }
+
