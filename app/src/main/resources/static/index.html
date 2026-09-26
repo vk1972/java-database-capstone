@@ -12,27 +12,40 @@ and triggers modal-based login functionality.
 2. Declare Document Type
 
    * Use the declaration for HTML5 so browsers know how to render the page correctly.
-
+-->
+<!DOCTYPE html> 
+<!--
 3. Start the HTML Document
 
    * Begin the HTML structure and set the document language to English to improve accessibility and SEO `lang="en"`.
-
+-->
+<html lang="en">
+<!--
 4. Head Section (Metadata and Resources)
 
    * Open the `<head>` section which contains settings and links that don’t show up visually.
-
+-->
+<head>
+<!--   
 5. Set Character Encoding
 
    * Specify UTF-8 encoding to support most global characters and symbols.
-
+-->
+<meta charset="UTF-8">
+<!-- 
 6. Set the Page Title
 
    * Give the page a name (e.g., "Select Role") that appears on the browser tab.
-
+-->
+<meta charset="UTF-8">
+<title>Select Role</title>
+<!-- 
 7. Add a Favicon
 
    * Link to an icon (like a logo) that will appear in the browser tab from the address `href="../assets/images/logo/Logo.png"`
-
+-->
+<link rel="icon" type="image/x-icon" href="../assets/images/logo/Logo.png" />
+    <!-- 
 8. Link Stylesheets
 
    * Add a page-specific stylesheet for layout and design.
@@ -41,7 +54,10 @@ and triggers modal-based login functionality.
    HINT:
       `<link rel="stylesheet" href="../assets/css/index.css">`
       `<link rel="stylesheet" href="../assets/css/style.css">`
-
+-->
+<link rel="stylesheet" href="../assets/css/index.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+    <!--  
 9. Add JavaScript Files with `defer`
 
    * Link utility and rendering JavaScript files (e.g., `util.js`, `render.js`).
@@ -53,52 +69,90 @@ and triggers modal-based login functionality.
       `<script src="../js/render.js" defer></script>`
       `<script src="../js/components/header.js" defer></script>`
       `<script src="../js/components/footer.js" defer></script>`
-      
+ -->
+ <script src="../js/util.js" defer></script>
+ <script src="../js/render.js" defer></script>
+ <script src="../js/components/header.js" defer></script>
+ <script src="../js/components/footer.js" defer></script>
+    <!--      
 10. Close the Head and Open the Body
 
     * Wrap up metadata and begin the visible page content.
-
+   -->
+</head>
+<body>
+<!--   
 11. Create a Container
 
     * Add a main container to hold all page elements and apply layout constraints.
-
+   -->
+<div class="container">
+<!-- 
 12. Use a Wrapper for Structure
 
     * Inside the container, add a wrapper to group header, main, and footer sections logically.
-
+  -->
+  <div class="wrapper">
+  <!-- 
 13. Insert a Header Placeholder
 
     * Add a `div` that will be dynamically filled by JavaScript with the site’s header.
-
+   -->
+   <div id="header"></div>
+    <!-- 
 14. Define the Main Section
 
     * Use a semantic `<main>` tag to hold the central content of the page.
-
+   -->
+   <main class="main-content">
+    <!-- 
 15. Add a Heading for Role Selection
 
     * Display a heading like “Select Your Role” to instruct users.
-
+    -->
+    <h2>Select Your Role</h2>
+    <!--
 16. Add Buttons for Roles
 
     * Create buttons for each role: Admin, Patient, and Doctor.
     * Assign unique identifiers or `onclick` handlers to them as needed.
-
+    -->
+    <button type="submit" class="btn-role" id="roleAdmin">Role Admin</button>
+    <button type="submit" class="btn-role" id="rolePatient">Role Patient</button>
+    <button type="submit" class="btn-role" id="roleDoctor">Role Doctor</button>
+    <!--
 17. Insert a Footer Placeholder
 
     * Add a `div` that will be dynamically filled by JavaScript with the site’s footer.
-
+   -->
+</main>
+   <div id="footer"></div>
+    <!-- 
 18. Create a Modal Structure
 
     * Add a modal overlay for popups (like login forms).
     * Include a close button and an inner container for dynamic content.
+    -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>   
 
+<!--
 19. Load Page-Specific Logic Module
 
     * Use a `<script type="module">` tag to load the role selection logic (e.g., `index.js`).
     * Ensure it’s deferred so it doesn’t block HTML rendering.
-
+    -->
+    <script type="module" src="../js/services/index.js" defer></script>
+    <!--
 20. Close the Body and HTML Tags
 
     * Properly close all opened tags to complete the document structure.
-
  -->
+</div>
+</div>
+</body>
+</html>
