@@ -1,5 +1,8 @@
 package com.project.back_end.mvc;
 
+import javax.util.*;
+
+@Controller
 public class DashboardController {
 
 // 1. Set Up the MVC Controller Class:
@@ -9,15 +12,18 @@ public class DashboardController {
 
 // 2. Autowire the Shared Service:
 //    - Inject the common `Service` class, which provides the token validation logic used to authorize access to dashboards.
-
-
+@Autowire
+private Service service;
 // 3. Define the `adminDashboard` Method:
 //    - Handles HTTP GET requests to `/adminDashboard/{token}`.
 //    - Accepts an admin's token as a path variable.
 //    - Validates the token using the shared service for the `"admin"` role.
 //    - If the token is valid (i.e., no errors returned), forwards the user to the `"admin/adminDashboard"` view.
 //    - If invalid, redirects to the root URL, likely the login or home page.
-
+@GetMapping("/adminDashboard/{token}")
+private adminDashboard(){
+    Map map = service.validateToken(token, "admin");
+}
 
 // 4. Define the `doctorDashboard` Method:
 //    - Handles HTTP GET requests to `/doctorDashboard/{token}`.
@@ -25,6 +31,10 @@ public class DashboardController {
 //    - Validates the token using the shared service for the `"doctor"` role.
 //    - If the token is valid, forwards the user to the `"doctor/doctorDashboard"` view.
 //    - If the token is invalid, redirects to the root URL.
+@GetMapping("/doctorDashboard/{token}")
+private doctorDashboard(){
+    Map map = service.validateToken(token, "doctor");
+}
 
 
 }
