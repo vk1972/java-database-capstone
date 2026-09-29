@@ -96,6 +96,7 @@ public ResponseEntity<Map<String, String>> cancelAppointment(Appointment appoint
 //    - This method retrieves a list of appointments for a specific doctor on a particular day, optionally filtered by the patient's name.
 //    - It uses `@Transactional` to ensure that database operations are consistent and handled in a single transaction.
 //    - Instruction: Ensure the correct use of transaction boundaries, especially when querying the database for appointments.
+@Transactional
 Map<String, Object> getAppointment(String dname, String pname, LocalDate date, String token){
     List apl = appointmentRepository.findByDoctorIdAndAppointmentTimeBetween(dname, LocalDate.now(), date) ;
     Map map = new HashMap();

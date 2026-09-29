@@ -1,5 +1,14 @@
 package com.project.back_end.services;
 
+import org.springframework.stereotype.Service;
+
+import com.project.back_end.DTO.Login;
+import com.project.back_end.models.Appointment;
+import com.project.back_end.models.Doctor;
+
+import java.util.*;
+
+@Service
 public class DoctorService {
 
 // 1. **Add @Service Annotation**:
@@ -12,6 +21,15 @@ public class DoctorService {
 //    - These dependencies should be injected via the constructor for proper dependency management.
 //    - Instruction: Ensure constructor injection is used for injecting dependencies into the service.
 
+private final AppointmentRepository appointmentRepository;
+private final TokenService tokenService;
+private final DoctorRepository doctorRepository;
+
+public class AppointmentServiceAppointmentService(AppointmentRepository appointmentRepository, Service service, TokenService tokenService, PatientRepository patientRepository, DoctorRepository doctorRepository ){
+    this.appointmentRepository = appointmentRepository;
+    this.tokenService = tokenService;
+    this.doctorRepository = doctorRepository;
+}
 // 3. **Add @Transactional Annotation for Methods that Modify or Fetch Database Data**:
 //    - Methods like `getDoctorAvailability`, `getDoctors`, `findDoctorByName`, `filterDoctorsBy*` should be annotated with `@Transactional`.
 //    - The `@Transactional` annotation ensures that database operations are consistent and wrapped in a single transaction.
@@ -21,40 +39,132 @@ public class DoctorService {
 //    - Retrieves the available time slots for a specific doctor on a particular date and filters out already booked slots.
 //    - The method fetches all appointments for the doctor on the given date and calculates the availability by comparing against booked slots.
 //    - Instruction: Ensure that the time slots are properly formatted and the available slots are correctly filtered.
+@Transactional
+List<String> getDoctorAvailability(Long doctorId, LocalDate date){
+    List<String> unbooked = new ArrayList<>();
+    List<Appointment> appointments = appointmentRepository.findByDoctorIdAndAppointmentTimeBetween(doctorId, date, date);
+    for (Appointment a : appointments){
+        if(a.getAppointmentTimeOnly()== null)
+        unbooked.add(a.getAppointmentTimeOnly());
+    }
+    return unbooked;
+}
+
 
 // 5. **saveDoctor Method**:
 //    - Used to save a new doctor record in the database after checking if a doctor with the same email already exists.
 //    - If a doctor with the same email is found, it returns `-1` to indicate conflict; `1` for success, and `0` for internal errors.
 //    - Instruction: Ensure that the method correctly handles conflicts and exceptions when saving a doctor.
+@Transactional
+public int saveDoctor(Doctor doctor){
+    try{
+        Doctor d = doctorRepository.getDoctorByEmail(doctor.getEmail());
+        if(d != null)
+            return -1;
+        doctorRepository.save(doctor);
+        return 1;
+    }catch(Excption e){
+        return 0;
+    }
+}    
 
 // 6. **updateDoctor Method**:
 //    - Updates an existing doctor's details in the database. If the doctor doesn't exist, it returns `-1`.
 //    - Instruction: Make sure that the doctor exists before attempting to save the updated record and handle any errors properly.
+@Transactional
+public int saveDoctor(Doctor doctor){
+    try{
+        Doctor d = doctorRepository.getDoctorById(doctor.getId());
+        if(d == null)
+            return -1;
+        doctorRepository.update(doctor);
+        return 1;
+    }catch(Excption e){
+        return 0;
+    }    
+}
 
 // 7. **getDoctors Method**:
 //    - Fetches all doctors from the database. It is marked with `@Transactional` to ensure that the collection is properly loaded.
 //    - Instruction: Ensure that the collection is eagerly loaded, especially if dealing with lazy-loaded relationships (e.g., available times). 
+@Transactional
+List<Doctor> getDoctors(){
+    return doctorRepository.findAll();
+}
 
 // 8. **deleteDoctor Method**:
 //    - Deletes a doctor from the system along with all appointments associated with that doctor.
 //    - It first checks if the doctor exists. If not, it returns `-1`; otherwise, it deletes the doctor and their appointments.
 //    - Instruction: Ensure the doctor and their appointments are deleted properly, with error handling for internal issues.
 
+@Transactional
+public int deleteDoctor(Doctor doctor){
+    try{
+        Doctor d = doctorRepository.getDoctorById(doctor.getId());
+        if(d == null)
+            return -1;
+        appointmentRepository.deleteAllByDoctorId(doctor.getId())
+        doctorRepository.delete(doctor);
+        return 1;
+    }catch(Excption e){
+        return 0;
+    }    
+}
+
 // 9. **validateDoctor Method**:
 //    - Validates a doctor's login by checking if the email and password match an existing doctor record.
 //    - It generates a token for the doctor if the login is successful, otherwise returns an error message.
 //    - Instruction: Make sure to handle invalid login attempts and password mismatches properly with error responses.
+public ResponseEntity<Map<String, String>> validateDoctor(Login login){
+  try{
+    Map<String, String> responseBody = new HashMap<>();
+    Doctor d = doctorRepository.findByEmail(login.getEmail());  
+    if(d != null){
+        if(d.getEmail().equals(login.getEmail()) && d.getPassword().equals(login.getPassword())){
+            responseBody.put("status", "success");
+            // Vraća JSON s HTTP statusom 200 OK
+            return ResponseEntity.ok(responseBody);
+        }else{
+            responseBody.put("status", "failure");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+}catch(Excepton e){
+    responseBody.put("status", "failure");
+    return ResponseEntity.internalServerError().body(errorResponse);
+}
+}
 
 // 10. **findDoctorByName Method**:
 //    - Finds doctors based on partial name matching and returns the list of doctors with their available times.
 //    - This method is annotated with `@Transactional` to ensure that the database query and data retrieval are properly managed within a transaction.
 //    - Instruction: Ensure that available times are eagerly loaded for the doctors.
+@Transactional
+public Map<String, Object> findDoctorByName(String name){
+    Map<String, Object> md = new HashMap<>();
+    List<doctor> ld = doctorRepository.findByNameLike("%" + name + "%");
+    for(Doctor d:ld){
+        md.put(d.getName(), d);
+    }
+    return md;
+}
+
 
 
 // 11. **filterDoctorsByNameSpecilityandTime Method**:
 //    - Filters doctors based on their name, specialty, and availability during a specific time (AM/PM).
 //    - The method fetches doctors matching the name and specialty criteria, then filters them based on their availability during the specified time period.
 //    - Instruction: Ensure proper filtering based on both the name and specialty as well as the specified time period.
+@Transactional
+public Map<String, Object> filterDoctorsByNameSpecilityandTime(String name, String specialty, String amOrPm){
+    Map<String, Object> md = new HashMap<>();
+    List<doctor> ld = doctorRepository.findByNameSpecilityandTime(name, specialty, amOrPm);
+    for(Doctor d:ld){
+        md.put(d.getName(), d);
+    }
+    return md;
+}
+
 
 // 12. **filterDoctorByTime Method**:
 //    - Filters a list of doctors based on whether their available times match the specified time period (AM/PM).
@@ -62,10 +172,14 @@ public class DoctorService {
 //    - Instruction: Ensure that the time filtering logic correctly handles both AM and PM time slots and edge cases.
 
 
+
+
 // 13. **filterDoctorByNameAndTime Method**:
 //    - Filters doctors based on their name and the specified time period (AM/PM).
 //    - Fetches doctors based on partial name matching and filters the results to include only those available during the specified time period.
 //    - Instruction: Ensure that the method correctly filters doctors based on the given name and time of day (AM/PM).
+
+
 
 // 14. **filterDoctorByNameAndSpecility Method**:
 //    - Filters doctors by name and specialty.
