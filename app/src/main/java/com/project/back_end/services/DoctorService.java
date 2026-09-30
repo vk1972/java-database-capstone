@@ -25,7 +25,7 @@ private final AppointmentRepository appointmentRepository;
 private final TokenService tokenService;
 private final DoctorRepository doctorRepository;
 
-public class AppointmentServiceAppointmentService(AppointmentRepository appointmentRepository, Service service, TokenService tokenService, PatientRepository patientRepository, DoctorRepository doctorRepository ){
+public DoctorService(AppointmentRepository appointmentRepository, Service service, TokenService tokenService, PatientRepository patientRepository, DoctorRepository doctorRepository ){
     this.appointmentRepository = appointmentRepository;
     this.tokenService = tokenService;
     this.doctorRepository = doctorRepository;
@@ -103,7 +103,7 @@ public int deleteDoctor(Doctor doctor){
         Doctor d = doctorRepository.getDoctorById(doctor.getId());
         if(d == null)
             return -1;
-        appointmentRepository.deleteAllByDoctorId(doctor.getId())
+        appointmentRepository.deleteAllByDoctorId(doctor.getId());
         doctorRepository.delete(doctor);
         return 1;
     }catch(Excption e){

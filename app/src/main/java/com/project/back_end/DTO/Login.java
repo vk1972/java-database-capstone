@@ -32,13 +32,13 @@ private String password;
 public String getEmail(){
     return email;
 }
-setEmail(String email){
+public void setEmail(String email){
     this.email=email;
 }
-public Striing getPassword(){
+public String getPassword(){
     return password;
 }
-setPassword(String password){
+public void setPassword(String password){
     this.password=password;
 }
 

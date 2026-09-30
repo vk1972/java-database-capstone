@@ -21,7 +21,7 @@ private Service service;
 //    - If the token is valid (i.e., no errors returned), forwards the user to the `"admin/adminDashboard"` view.
 //    - If invalid, redirects to the root URL, likely the login or home page.
 @GetMapping("/adminDashboard/{token}")
-private adminDashboard(){
+private void adminDashboard(){
     Map map = service.validateToken(token, "admin");
 }
 
@@ -32,7 +32,7 @@ private adminDashboard(){
 //    - If the token is valid, forwards the user to the `"doctor/doctorDashboard"` view.
 //    - If the token is invalid, redirects to the root URL.
 @GetMapping("/doctorDashboard/{token}")
-private doctorDashboard(){
+private void doctorDashboard(){
     Map map = service.validateToken(token, "doctor");
 }
 

@@ -25,7 +25,7 @@ private final TokenService tokenService;
 private final PatientRepository patientRepository;
 private final DoctorRepository doctorRepository;
 
-public class AppointmentServiceAppointmentService(AppointmentRepository appointmentRepository, Service service, TokenService tokenService, PatientRepository patientRepository, DoctorRepository doctorRepository ){
+public AppointmentService(AppointmentRepository appointmentRepository, Service service, TokenService tokenService, PatientRepository patientRepository, DoctorRepository doctorRepository ){
     this.appointmentRepository = appointmentRepository;
     this.service = service;
     this.tokenService = tokenService;
